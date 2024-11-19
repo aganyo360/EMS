@@ -1,0 +1,227 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Admin Panel - Employee Leave</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% include 'includes/css.html' %}
+</head>
+
+<body>
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    
+    <div class="page-container">
+        <div class="sidebar-menu">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <a href="{% url 'dashboard'%}"><img src="{% static 'assets/images/icon/logo.png' %}" alt="logo"></a>
+                </div>
+            </div>
+            <div class="main-menu">
+                <div class="menu-inner">
+                    {% include 'includes/admin-sidebar.html' %}
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header-area">
+                <div class="row align-items-center">
+                    <div class="col-md-6 col-sm-8 clearfix">
+                        <div class="nav-btn pull-left">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-6 col-sm-4 clearfix">
+                        <ul class="notification-area pull-right">
+                            <li id="full-view"><i class="ti-fullscreen"></i></li>
+                            <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
+                            {% include 'includes/admin-notification.html' %}
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="breadcrumbs-area clearfix">
+                            <h4 class="page-title pull-left">Leave Details</h4>
+                            <ul class="breadcrumbs pull-left">
+                                <li><a href="{% url 'dashboard'%}">Home</a></li>
+                                <li><span>Leave Details</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 clearfix">
+                        <div class="user-profile pull-right">
+                            <img class="avatar user-thumb" src="{% static 'assets/images/admin.png' %}" alt="avatar">
+                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">ADMIN <i class="fa fa-angle-down"></i></h4>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'logout'%}">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-content-inner">
+               
+                <div class="row">
+                    
+                    <div class="col-lg-12 mt-5">
+                        {% include 'includes/messages.html' %}
+                        <div class="card">
+                            <div class="card-body">
+                                
+                                <div class="single-table">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover text-center">
+                                            
+                                            <tbody>
+
+                                                <tr>
+
+                                                <td ><b>Employee ID:</b></td>
+                                              <td colspan="1">{{leave.employee.emp_id}}</td>
+                                            <td> <b>Employee Name:</b></td>
+                                              <td colspan="1"><a href="{% url 'update-employee'%}?empid={{leave.employee.id}}" target="_blank">
+                                                {{leave.employee.user.first_name}} {{leave.employee.user.last_name}}
+                                            </a></td>
+
+                                              <td ><b>Gender :</b></td>
+                                              <td colspan="1">{{leave.employee.gender}}</td>
+                                          </tr>
+
+                                          <tr>
+                                             <td ><b>Employee Email:</b></td>
+                                            <td colspan="1">{{leave.employee.user.email}}</td>
+                                             <td ><b>Employee Contact:</b></td>
+                                            <td colspan="1">{{leave.employee.phone_number}}</td>
+
+                                            <td ><b>Leave Type:</b></td>
+                                            <td colspan="1">{{leave.leave_type.name}}</td>
+                                            
+                                        </tr>
+
+                                    <tr>
+                                             
+                                             <td ><b>Leave From:</b></td>
+                                            <td colspan="1">{{leave.from_date}}</td>
+                                            <td><b>Leave Upto:</b></td>
+                                            <td colspan="1">{{leave.to_date}}</td>
+                                            
+                                        </tr>
+
+                                    
+
+                                <tr>
+                                <td ><b>Leave Applied:</b></td>
+                                <td>{{leave.posting_date}}</td>
+
+                                <td ><b>Status:</b></td>
+                                <td>
+                                    {% if leave.status == 1 %}
+                                    <span style="color: green">Approved</span>
+                                    {% elif leave.status == 2 %}
+                                    <span style="color: red">Declined</span>
+                                    {%else%}
+                                    <span style="color: blue">Pending</span>
+                                    {%endif%}
+                                    </td>
+
+                                    
+                                </tr>
+
+                                <tr>
+                                     <td ><b>Leave Conditions: </b></td>
+                                     <td colspan="5">{{leave.description}}</td>
+                                          
+                                </tr>
+
+                                <tr>
+                                    <td ><b>Admin Remark: </b></td>
+                                    <td colspan="12">
+                                    {% if admin_remark %}
+                                    {{leave.admin_remark}}
+                                    {%else%}
+                                    {{"Waiting for Action"}}
+                                    {%endif%}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                <td ><b>Admin Action On: </b></td>
+                                    <td>
+                                        {% if admin_remark_date %}
+                                        {{admin_remark_date}}
+                                        {%else%}
+                                        {{"NA"}}
+                                        {%endif%}</td>
+                                </tr>
+
+                            
+                            <tr>
+                            <td colspan="12">
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">SET ACTION</button>
+                            
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">SET ACTION</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <form method="POST" name="adminaction">
+                                    {%csrf_token%}
+                                <div class="modal-body">
+                                
+                                    <select class="custom-select" name="status" required="">
+                                        <option value="">Choose...</option>
+                                        <option value="1">Approve</option>
+                                        <option value="2">Decline</option>
+                                    </select></p>
+                                    <br>
+                                    <p><textarea id="textarea1" name="description" class="form-control" name="description" placeholder="Description" row="5" maxlength="500" required></textarea></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-success" name="update">Apply</button>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+
+                            </td>
+                            </tr>
+                            </form>
+                             </tr>
+                                    </tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>                
+                </div>
+            </div>
+            {% include 'includes/footer.html' %}
+        </div>
+		
+    </div>
+    {% include 'includes/js.html' %}
+</body>
+
+</html>

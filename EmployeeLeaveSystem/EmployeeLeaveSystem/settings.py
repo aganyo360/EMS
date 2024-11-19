@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-=c3_7scv!oj&cp1k*1(3mnhmi6-luzv=h70kxe3$fl7p0*l-xo
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+LOGIN_URL='/'
 
 # Application definition
 
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'leave_management'
 ]
 
 MIDDLEWARE = [
@@ -76,7 +77,7 @@ WSGI_APPLICATION = 'EmployeeLeaveSystem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite',
     }
 }
 

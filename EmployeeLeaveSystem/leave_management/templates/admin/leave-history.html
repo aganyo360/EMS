@@ -1,0 +1,155 @@
+{%load static %}
+
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Admin Panel - Employee Leave</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% include 'includes/css.html' %}
+</head>
+
+<body>
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>    
+    <div class="page-container">
+        <div class="sidebar-menu">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <a href="{% url 'dashboard' %}"><img src="{% static 'assets/images/icon/logo.png' %}" alt="logo"></a>
+                </div>
+            </div>
+            <div class="main-menu">
+                <div class="menu-inner">
+                    {% include 'includes/admin-sidebar.html' %}
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header-area">
+                <div class="row align-items-center">
+                    <div class="col-md-6 col-sm-8 clearfix">
+                        <div class="nav-btn pull-left">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-6 col-sm-4 clearfix">
+                        <ul class="notification-area pull-right">
+                            <li id="full-view"><i class="ti-fullscreen"></i></li>
+                            <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
+
+                            {% include 'includes/admin-notification.html' %}
+    
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="breadcrumbs-area clearfix">
+                            <h4 class="page-title pull-left">Leaves History</h4>
+                            <ul class="breadcrumbs pull-left">
+                                <li><a href="{% url 'dashboard' %}">Home</a></li>
+                                <li><span>Leaves History</span></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-6 clearfix">
+                        <div class="user-profile pull-right">
+                            <img class="avatar user-thumb" src="{% static 'assets/images/admin.png' %}" alt="avatar">
+                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">ADMIN <i class="fa fa-angle-down"></i></h4>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-content-inner">
+
+
+                <div class="row">
+
+
+                    <div class="col-12 mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="single-table">
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table table-hover table-striped table-bordered progress-table text-center">
+                                            <thead class="text-uppercase">
+
+                                                <tr>
+                                                    <td>S.N</td>
+                                                    <td>Employee ID</td>
+                                                    <td width="120">Full Name</td>
+                                                    <td>Leave Type</td>
+                                                    <td>Applied On</td>
+                                                    <td>Current Status</td>
+                                                    <td></td>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {% for leave_record in leave_records %}
+                                                <tr>
+                                                    <td> <b>{{forloop.counter}}</b></td>
+                                                    <td>{{leave_record.employee.emp_id}}</td>
+                                                    <td><a href="update-employee?empid=leave_record.employee.id"
+                                                        target="_blank">
+                                                        {{leave_record.employee.user.first_name}} {{leave_record.employee.user.last_name}}
+                                                    </a></td>
+                                                    <td>{{leave_record.leave_type.name}}</td>
+                                                    <td>{{leave_record.posting_date}}</td>
+                                                    <td>
+                                                        {% if leave_record.status == 1 %}
+                                                        <span style="color: green">Accepted <i
+                                                                class="fa fa-thumbs-o-up"></i></span>
+                                                        {% elif leave_record.stats == 2 %}
+                                                        <span style="color: red">Declined <i
+                                                                class="fa fa-thumbs-o-down"></i></span>
+                                                        {%elif leave_record.status == 0 %}
+                                                        <span style="color: blue">Pending <i
+                                                                class="fa fa-spinner"></i></span>
+                                                        {%endif%}
+
+
+                                                    </td>
+
+
+                                                    <td><a href="employeeLeave-details?leaveid={{leave_record.id}}"
+                                                            class="btn btn-secondary btn-sm"> View Details</a></td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            </div>
+            {% include 'includes/footer.html' %}
+        </div>
+    </div>
+   
+    {% include 'includes/js.html' %}
+
+</body>
+
+</html>

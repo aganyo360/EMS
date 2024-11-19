@@ -1,0 +1,183 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Admin Panel - Employee Leave</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% include 'includes/css.html' %}
+    <script type="text/javascript">
+        function valid(){
+            if(document.addemp.password.value!= document.addemp.confirmpassword.value) {
+            alert("New Password and Confirm Password Field do not match  !!");
+            document.addemp.confirmpassword.focus();
+            return false;
+                } return true;
+        }
+    </script>
+
+    <script>
+        function checkAvailabilityEmpid() {
+            $("#loaderIcon").show();
+            jQuery.ajax({
+            url: "check_availability.php",
+            data:'empcode='+$("#empcode").val(),
+            type: "POST",
+            success:function(data){
+            $("#empid-availability").html(data);
+            $("#loaderIcon").hide();
+            },
+            error:function (){}
+            });
+        }
+    </script>
+
+    <script>
+        function checkAvailabilityEmailid() {
+            $("#loaderIcon").show();
+            jQuery.ajax({
+            url: "check_availability.php",
+            data:'emailid='+$("#email").val(),
+            type: "POST",
+            success:function(data){
+            $("#emailid-availability").html(data);
+            $("#loaderIcon").hide();
+            },
+            error:function (){}
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    
+    <div class="page-container">
+        <div class="sidebar-menu">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <a href="{% url 'dashboard'%}"><img src="{% static 'assets/images/icon/logo.png' %}" alt="logo"></a>
+                </div>
+            </div>
+            <div class="main-menu">
+                <div class="menu-inner">
+                    {% include 'includes/admin-sidebar.html' %}
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header-area">
+                <div class="row align-items-center">
+                    <div class="col-md-6 col-sm-8 clearfix">
+                        <div class="nav-btn pull-left">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-6 col-sm-4 clearfix">
+                        <ul class="notification-area pull-right">
+                            <li id="full-view"><i class="ti-fullscreen"></i></li>
+                            <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
+                            {% include 'includes/admin-notification.html' %}
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="breadcrumbs-area clearfix">
+                            <h4 class="page-title pull-left">Add Admin Section</h4>
+                            <ul class="breadcrumbs pull-left"> 
+                                <li><a href="{% url 'manage-admin'%}">Manage Admin</a></li>
+                                <li><span>Add</span></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-6 clearfix">
+                        <div class="user-profile pull-right">
+                            <img class="avatar user-thumb" src="{% static 'assets/images/admin.png'%}" alt="avatar">
+                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">ADMIN <i class="fa fa-angle-down"></i></h4>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{%url 'logout'%}">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-content-inner">
+                
+            
+                <div class="row">
+                <div class="col-lg-6 col-ml-12">
+                        <div class="row">
+                            <div class="col-12 mt-5">
+                                {% include 'includes/messages.html' %}
+                                <div class="card">
+                                <form name="addemp" method="POST">
+                                    {%csrf_token%}
+                                    <div class="card-body">
+                                        <p class="text-muted font-14 mb-4">Please fill up the form in order to add new system administrator</p>
+                                    
+
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="col-form-label">Full Name</label>
+                                            <input class="form-control" name="fullname"  type="text" required id="example-text-input">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="example-email-input" class="col-form-label">Email ID</label>
+                                            <input class="form-control" name="email" type="email"  autocomplete="off" required id="example-email-input">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="col-form-label">Username</label>
+                                            <input class="form-control" name="username" type="text"   autocomplete="off" required id="example-text-input">
+                                        </div>
+
+                                        <h4>Setting Passwords</h4>
+
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="col-form-label">Password</label>
+                                            <input class="form-control" name="password" type="password" autocomplete="off" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="col-form-label">Confirmation Password</label>
+                                            <input class="form-control" name="confirmpassword" type="password" autocomplete="off" required>
+                                        </div>
+
+                        
+
+                                        <button class="btn btn-primary" name="add" id="update" type="submit" onclick="return valid();">PROCEED</button>
+                                        
+                                    </div>
+                                </form>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                </div>
+            </div>
+            {% include 'includes/footer.html' %}
+        </div>
+        
+    </div>
+    {% include 'includes/js.html' %}
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Employee Leave Management System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% include 'includes/css.html' %}
+</head>
+
+<body>
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <div class="page-container">
+        <div class="sidebar-menu">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <a href="{% url 'leave'%}"><img src="{% static 'assets/images/icon/logo.png'%}" alt="logo"></a>
+                </div>
+            </div>
+            <div class="main-menu">
+                <div class="menu-inner">
+                    <nav>
+                        <ul class="metismenu" id="menu">
+
+                            <li class="#">
+                                <a href="{% url 'leave'%}" aria-expanded="true"><i class="ti-user"></i><span>Apply Leave
+                                    </span></a>
+                            </li>
+
+                            <li class="active">
+                                <a href="{% url 'leave_history'%}" aria-expanded="true"><i class="ti-agenda"></i><span>View My Leave History
+                                    </span></a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header-area">
+                <div class="row align-items-center">
+                    <div class="col-md-6 col-sm-8 clearfix">
+                        <div class="nav-btn pull-left">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-6 col-sm-4 clearfix">
+                        <ul class="notification-area pull-right">
+                            <li id="full-view"><i class="ti-fullscreen"></i></li>
+                            <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
+                            
+                            
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="breadcrumbs-area clearfix">
+                            <h4 class="page-title pull-left">My Leave History</h4>  
+                        </div>
+                    </div>
+                    <div class="col-sm-6 clearfix">
+                         {% include 'includes/employee-profile-section.html' %}
+                    </div>
+                </div>
+            </div>
+            <div class="main-content-inner">
+                <div class="row">
+                    <div class="col-12 mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title">Leave History Table</h4>
+                                {% include 'includes/messages.html' %}
+                                <div class="data-tables">
+                                    <table id="dataTable" class="table table-hover progress-table text-center">
+                                        <thead class="bg-light text-capitalize">
+                                            <tr>
+                                                <th>#</th>
+                                                <th width="150">Type</th>
+                                                <th>Conditions</th>
+                                                <th>From</th>
+                                                <th>To</th>
+                                                <th width="150">Applied</th>
+                                                <th width="120">Admin's Remark</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for leave in leaves %}
+                                                    <tr>
+                                                        <td>{{ forloop.counter }}</td>
+                                                        <td>{{ leave.leave_type.name }}</td>
+                                                        <td>{{ leave.description }}</td>
+                                                        <td>{{ leave.from_date }}</td>
+                                                        <td>{{ leave.to_date }}</td>
+                                                        <td>{{ leave.posting_date }}</td>
+                                                        <td>
+                                                            {% if leave.admin_remark %}
+                                                                {{ leave.admin_remark }} at {{ leave.admin_remark_date }}
+                                                            {% else %}
+                                                                Pending
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if leave.status == 1 %}
+                                                                <span style="color: green;">Approved</span>
+                                                            {% elif leave.status == 2 %}
+                                                                <span style="color: red;">Rejected</span>
+                                                            {% else %}
+                                                                <span style="color: blue;">Pending</span>
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% empty %}
+                                                    <tr>
+                                                        <td colspan="8">No leave history available.</td>
+                                                    </tr>
+                                                {% endfor %}
+
+                                          
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'includes/footer.html' %}
+    </div>
+    <div class="offset-area">
+        <div class="offset-close"><i class="ti-close"></i></div>
+        
+        
+    </div>
+    {% include 'includes/js.html' %}
+</body>
+
+</html>

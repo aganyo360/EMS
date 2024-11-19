@@ -1,0 +1,35 @@
+{%load static %}
+
+<link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+<li class="dropdown">
+    <i class="ti-bell dropdown-toggle" data-toggle="dropdown">
+        <span>{{ unread_count }}</span>
+    </i>
+    <div class="dropdown-menu bell-notify-box notify-box">
+        <span class="notify-title">
+            You have {{ unread_count }} <b>unread</b> notifications!
+        </span>
+
+        <div class="notify-list">
+            {% if unread_leaves %}
+                {% for leave in unread_leaves %}
+                    <a href="{% url 'leave-details' leave.id %}" class="notify-item">
+                        <div class="notify-thumb">
+                            <i class="ti-comments-smiley btn-info"></i>
+                        </div>
+                        <div class="notify-text">
+                            <p>
+                                <b>{{ leave.employee.first_name }} {{ leave.employee.last_name }}
+                                    <br />({{ leave.employee.emp_id }})
+                                </b> has recently applied for a leave.
+                            </p>
+                            <span>at {{ leave.posting_date }}</span>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p>No new notifications!</p>
+            {% endif %}
+        </div>
+    </div>
+</li>

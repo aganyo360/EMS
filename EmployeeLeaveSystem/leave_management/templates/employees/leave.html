@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Leave Management System</title>
+    {% include 'includes/css.html' %}
+</head>
+
+<body>
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <div class="page-container">
+        <div class="sidebar-menu">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <a href="{% url 'leave' %}"><img src="{% static 'assets/images/icon/logo.png' %}" alt="logo"></a>
+                </div>
+            </div>
+            <div class="main-menu">
+                <div class="menu-inner">
+                    <nav>
+                        <ul class="metismenu" id="menu">
+                            <li class="active">
+                                <a href="{% url 'leave' %}"><i class="ti-user"></i><span>Apply Leave</span></a>
+                            </li>
+                            <li>
+                                <a href="{% url 'leave_history' %}"><i class="ti-agenda"></i><span>View My Leave History</span></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="header-area">
+                <div class="row align-items-center">
+                    <div class="col-md-6 col-sm-8 clearfix">
+                        <div class="nav-btn pull-left">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-4 clearfix">
+                        <ul class="notification-area pull-right">
+                            <li id="full-view"><i class="ti-fullscreen"></i></li>
+                            <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="breadcrumbs-area clearfix">
+                            <h4 class="page-title pull-left">Apply For Leave Days</h4>
+                            <ul class="breadcrumbs pull-left">
+                                <li><span>Leave Form</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 clearfix">
+                        {% include 'includes/employee-profile-section.html' %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content-inner">
+                <div class="row">
+                    <div class="col-lg-6 col-ml-12">
+                        <div class="row">
+                            <div class="col-12 mt-5">
+                                {% if error %}
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                    <strong>Info: </strong>{{ error }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                {% elif msg %}
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    <strong>Info: </strong>{{ msg }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                {% endif %}
+                                <div class="card">
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <div class="card-body">
+                                            <h4 class="header-title">Employee Leave Form</h4>
+                                            <p class="text-muted font-14 mb-4">Please fill up the form below.</p>
+
+                                            <div class="form-group">
+                                                <label for="from_date" class="col-form-label">Starting Date</label>
+                                                <input class="form-control" type="date" id="from_date" name="fromdate" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="to_date" class="col-form-label">End Date</label>
+                                                <input class="form-control" type="date" id="to_date" name="todate" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-form-label">Your Leave Type</label>
+                                                <select class="custom-select" name="leavetype" required>
+                                                    <option value="">Click here to select...</option>
+                                                    {% for leave_type in leave_types %}
+                                                    <option value="{{ leave_type.id }}">{{ leave_type.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="description" class="col-form-label">Describe Your Conditions</label>
+                                                <textarea class="form-control" id="description" name="description" rows="5" maxlength="400"></textarea>
+                                            </div>
+
+                                            <button class="btn btn-primary" type="submit">SUBMIT</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include 'includes/footer.html' %}
+    </div>
+
+    <script src="{% static 'assets/js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <script src="{% static 'assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'assets/js/metisMenu.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.slimscroll.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
+</body>
+
+</html>
