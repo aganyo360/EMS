@@ -7,22 +7,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Admin Panel - Employee Leave</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="../assets/images/icon/favicon.ico">
-    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css'%}">
-    <link rel="stylesheet" href="{% static 'assets/css/font-awesome.min.css'%}">
-    <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css'%}">
-    <link rel="stylesheet" href="{% static 'assets/css/metisMenu.css'%}">
-    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css'%}">
-    <link rel="stylesheet" href="{% static 'assets/css/slicknav.min.css'%}">
-    <!-- amchart css -->
-    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
-    <!-- others css -->
-    <link rel="stylesheet" href="{% static 'assets/css/typography.css'%}">
-    <link rel="stylesheet" href="{% static 'assets/css/default-css.css'%}">
-    <link rel="stylesheet" href="{% static 'assets/css/styles.css'%}">
-    <link rel="stylesheet" href="{% static 'assets/css/responsive.css'%}">
-    <!-- modernizr css -->
-    <script src="{% static 'assets/js/vendor/modernizr-2.8.3.min.js' %}"></script>
+    {% include 'includes/css.html' %}
 </head>
 
 <body>
@@ -233,7 +218,7 @@
                                         <!-- <h4 class="header-title"></h4> -->
                                         <div class="single-table">
                                             <div class="table-responsive">
-                                                <table class="table table-hover table-bordered table-striped progress-table text-center">
+                                                <table  id='dataTable' class="table table-hover table-bordered table-striped progress-table text-center">
                                                 <thead class="text-uppercase">
 
                                                 <tr>

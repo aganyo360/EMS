@@ -30,5 +30,25 @@ ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3eda
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
 
+<script src="https://cdn.datatables.net/2.2.1/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.2.0/js/dataTables.buttons.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.dataTables.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.print.min.js"></script>
+
+
 <script src="{% static 'assets/js/plugins.js' %}"></script>
 <script src="{% static 'assets/js/scripts.js' %}"></script>
+
+<script>
+    new DataTable('#example', {
+        layout: {
+            topStart: {
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+            }
+        }
+    });
+</script>

@@ -79,7 +79,7 @@
         
     }
     if ($('#dataTable2').length) {
-        $('#dataTable').DataTable({
+        $('#dataTable2').DataTable({
             responsive: true,
             layout: {
                 topStart: {
@@ -89,7 +89,7 @@
         });
     }
     if ($('#dataTable3').length) {
-        $('#dataTable').DataTable({
+        $('#dataTable3').DataTable({
             responsive: true,
             layout: {
                 topStart: {
