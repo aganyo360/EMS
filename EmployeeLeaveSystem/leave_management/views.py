@@ -244,6 +244,24 @@ def manage_admin(request):
 def add_admin(request):
     if not request.user.is_superuser:
         return redirect('leave')
+    if(request.method == "POST"):
+        first_name = request.POST.get("fullname")
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        confirm_password = request.POST.get("confirmpassword")
+
+        if password != confirm_password:
+            messages.error(request, "Password and Confirm Password do not match.")
+            return redirect("add-admin")
+
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "Email already exists.")
+            return redirect("add-admin")
+
+        user = User.objects.create_superuser(username=username, email=email, password=password, first_name=first_name)
+        messages.success(request, "Admin added successfully!")
+        return redirect("add-admin")
     return render(request, 'admin/add-admin.html')
 
 
@@ -270,7 +288,7 @@ def update_employee(request):
         city = request.POST.get("city")
         country = request.POST.get("country")
         phone_number = request.POST.get("mobileno")
-        print(dob, "*"*80)
+        print(dob, "*"*80, department_id )
         employee.gender = gender
         employee.dob = dob
         employee.department = get_object_or_404(Department, id=department_id)
@@ -290,7 +308,7 @@ def update_employee(request):
             messages.info(request, "Passwords not same")
         user.save()
         messages.success(request, "Updated successfully ")
-        return redirect('update-employee')
+        return redirect('/update-employee?empid='+str(employeeId))
     
     departments = Department.objects.all()
     
@@ -373,6 +391,11 @@ def employeeLeave_details(request):
 
 
 def employee_login(request):
+    if(request.user.is_authenticated ):
+        if(request.user.is_superuser):
+            return redirect('dashboard')
+        else:
+            return redirect('leave') 
     next = request.GET.get('next') or None
     if request.method == "POST":
         username = request.POST.get("username")

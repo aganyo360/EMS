@@ -2,10 +2,6 @@
 (function($) {
     "use strict";
 
-    /*================================
-    Preloader
-    ==================================*/
-
     var preloader = $('#preloader');
     $(window).on('load', function() {
         setTimeout(function() {
@@ -13,9 +9,6 @@
         }, 300)
     });
 
-    /*================================
-    sidebar collapsing
-    ==================================*/
     if (window.innerWidth <= 1364) {
         $('.page-container').addClass('sbar_collapsed');
     }
@@ -23,23 +16,14 @@
         $('.page-container').toggleClass('sbar_collapsed');
     });
 
-    /*================================
-    Start Footer resizer
-    ==================================*/
     var e = function() {
         var e = (window.innerHeight > 0 ? window.innerHeight : this.screen.height) - 5;
         (e -= 67) < 1 && (e = 1), e > 67 && $(".main-content").css("min-height", e + "px")
     };
     $(window).ready(e), $(window).on("resize", e);
 
-    /*================================
-    sidebar menu
-    ==================================*/
     $("#menu").metisMenu();
 
-    /*================================
-    slimscroll activation
-    ==================================*/
     $('.menu-inner').slimScroll({
         height: 'auto'
     });
@@ -56,15 +40,11 @@
         height: 'calc(100vh - 158px)'
     });
 
-    /*================================
-    stickey Header
-    ==================================*/
     $(window).on('scroll', function() {
         var scroll = $(window).scrollTop(),
             mainHeader = $('#sticky-header'),
             mainHeaderHeight = mainHeader.innerHeight();
 
-        // console.log(mainHeader.innerHeight());
         if (scroll > 1) {
             $("#sticky-header").addClass("sticky-menu");
         } else {
@@ -72,16 +52,10 @@
         }
     });
 
-    /*================================
-    form bootstrap validation
-    ==================================*/
     $('[data-toggle="popover"]').popover()
 
-    /*------------- Start form Validation -------------*/
     window.addEventListener('load', function() {
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
         var forms = document.getElementsByClassName('needs-validation');
-        // Loop over them and prevent submission
         var validation = Array.prototype.filter.call(forms, function(form) {
             form.addEventListener('submit', function(event) {
                 if (form.checkValidity() === false) {
@@ -93,36 +67,43 @@
         });
     }, false);
 
-    /*================================
-    datatable active
-    ==================================*/
     if ($('#dataTable').length) {
         $('#dataTable').DataTable({
-            responsive: true
+            responsive: true,
+            layout: {
+                topStart: {
+                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                }
+            }
         });
+        
     }
     if ($('#dataTable2').length) {
-        $('#dataTable2').DataTable({
-            responsive: true
+        $('#dataTable').DataTable({
+            responsive: true,
+            layout: {
+                topStart: {
+                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                }
+            }
         });
     }
     if ($('#dataTable3').length) {
-        $('#dataTable3').DataTable({
-            responsive: true
+        $('#dataTable').DataTable({
+            responsive: true,
+            layout: {
+                topStart: {
+                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                }
+            }
         });
     }
+   
 
-
-    /*================================
-    Slicknav mobile menu
-    ==================================*/
     $('ul#nav_menu').slicknav({
         prependTo: "#mobile_menu"
     });
 
-    /*================================
-    login form
-    ==================================*/
     $('.form-gp input').on('focus', function() {
         $(this).parent('.form-gp').addClass('focused');
     });
@@ -132,17 +113,11 @@
         }
     });
 
-    /*================================
-    slider-area background setting
-    ==================================*/
     $('.settings-btn, .offset-close').on('click', function() {
         $('.offset-area').toggleClass('show_hide');
         $('.settings-btn').toggleClass('active');
     });
 
-    /*================================
-    Owl Carousel
-    ==================================*/
     function slider_area() {
         var owl = $('.testimonial-carousel').owlCarousel({
             margin: 50,
@@ -174,9 +149,6 @@
     }
     slider_area();
 
-    /*================================
-    Fullscreen Page
-    ==================================*/
 
     if ($('#full-view').length) {
 
@@ -225,3 +197,13 @@
     }
 
 })(jQuery);
+
+function exportTableToExcel(tableID, filename = 'excel_data.xlsx') {
+    let table = document.getElementById(tableID);
+    let wb = XLSX.utils.book_new();
+    let ws = XLSX.utils.table_to_sheet(table);
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+    XLSX.writeFile(wb, filename);
+}
+

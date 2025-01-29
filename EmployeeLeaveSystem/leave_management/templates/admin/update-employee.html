@@ -113,7 +113,8 @@
                                             <div class="form-group">
                                                 <label class="col-form-label">Gender</label>
                                                 <select class="custom-select" name="gender" autocomplete="off">
-                                                    <option value="{{employee.gender}}">
+                                                    <option selected value="{{employee.gender}}">
+                                                        {{employee.gender}}
                                                     </option>
                                                     <option value="Male">Male</option>
                                                     <option value="Female">Female</option>
@@ -195,6 +196,12 @@
 
     </div>
     {% include 'includes/js.html' %}
+    <script>
+        const dob = new Date(employee.dob);
+        const formattedDob = dob.toISOString().split('T')[0];
+        document.querySelector('[name="dob"]').value = formattedDob;
+
+    </script>
 </body>
 
 </html>

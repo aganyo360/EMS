@@ -124,6 +124,12 @@
         
         
     </div>
+    <script>
+        const dob = new Date(employee.dob);
+        const formattedDob = dob.toISOString().split('T')[0];
+        document.querySelector('[name="dob"]').value = formattedDob;
+
+    </script>
     {% include 'includes/js.html' %}
 </body>
 

@@ -156,7 +156,12 @@
             </div>
         </div>
     </div>
+    <script>
+        const dob = new Date(employee.dob);
+        const formattedDob = dob.toISOString().split('T')[0];
+        document.querySelector('[name="dob"]').value = formattedDob;
 
+    </script>
     <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
     <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
 </body>

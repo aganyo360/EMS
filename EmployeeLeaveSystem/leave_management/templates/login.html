@@ -23,6 +23,8 @@
                 <form method="POST">
                     {% csrf_token %}
                     <div class="login-form-head">
+                        
+                        {% include 'includes/messages.html' %}
                         <h4>Employee Login Panel</h4>
                         <p>Employee Leave Management System</p>
                         {% if error_message %}
@@ -65,6 +67,16 @@
 
     <script src="{% static 'assets/js/jquery-2.2.4.min.js' %}"></script>
     <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script>
+        $('.form-gp input').on('focus', function() {
+            $(this).parent('.form-gp').addClass('focused');
+        });
+        $('.form-gp input').on('focusout', function() {
+            if ($(this).val().length === 0) {
+                $(this).parent('.form-gp').removeClass('focused');
+            }
+        });
+    </script>
 </body>
 
 </html>

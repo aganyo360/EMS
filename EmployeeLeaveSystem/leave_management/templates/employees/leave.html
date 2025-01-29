@@ -64,6 +64,7 @@
                             <ul class="breadcrumbs pull-left">
                                 <li><span>Leave Form</span></li>
                             </ul>
+
                         </div>
                     </div>
                     <div class="col-sm-6 clearfix">
@@ -99,6 +100,7 @@
                                             <h4 class="header-title">Employee Leave Form</h4>
                                             <p class="text-muted font-14 mb-4">Please fill up the form below.</p>
 
+                                            {% include 'includes/messages.html' %}
                                             <div class="form-group">
                                                 <label for="from_date" class="col-form-label">Starting Date</label>
                                                 <input class="form-control" type="date" id="from_date" name="fromdate" required>
